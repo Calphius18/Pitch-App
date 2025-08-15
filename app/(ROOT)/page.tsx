@@ -13,7 +13,7 @@ export default async function Home( {searchParams } : {searchParams: Promise<{ q
     _id: 1,
     description: "This is the description",
     image:"https://teamninja-studio.com/ng2black/assets/img/top_kv_image@sp.jpg",
-    category: "Ninja",
+    category: "Ninja Chronicles",
     title:" Ninja Assassin",
 
   }]
