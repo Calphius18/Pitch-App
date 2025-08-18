@@ -1,27 +1,22 @@
-import { title } from "process";
 import SearchBar from "../../components/SearchBar";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { STARTUP_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home( {searchParams } : {searchParams: Promise<{ query?: string}>}) {
 
   const query = (await searchParams).query;
 
-  const posts = [{
-    _createdAt: new Date(),
-    views: 18,
-    author: { _id: 1, name: "Caliphus"},
-    _id: 1,
-    description: "This is the description",
-    image:"https://teamninja-studio.com/ng2black/assets/img/top_kv_image@sp.jpg",
-    category: "Ninja Chronicles",
-    title:" Ninja Assassin",
+  const params = {search : query || null}
 
-  }]
+  const {data: posts} = await sanityFetch({ query: STARTUP_QUERY, params});
+
+  console.log(JSON.stringify(posts, null,2 ))
 
   return (
     <>
 
-      <section className="pink_container pattern">
+      <section className="blue_container pattern">
         <h1 className="heading">
           Pitch Your Dream <br /> Connect With Opportunities
         </h1>
@@ -42,7 +37,7 @@ export default async function Home( {searchParams } : {searchParams: Promise<{ q
 
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: StartupTypeCard, ) => (
+            posts.map((post:StartupTypeCard) => (
               <StartupCard key={post?._id} post = {post}/>
             ))
           ) : (
@@ -51,6 +46,8 @@ export default async function Home( {searchParams } : {searchParams: Promise<{ q
         </ul>
 
       </section>
+
+      <SanityLive/>
     </>
   );
 }
