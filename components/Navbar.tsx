@@ -7,6 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 const Navbar = async () => {
   const session = await auth();
 
+  console.log("Session in Navbar:", session);
+  console.log(session?.user?.username)
   return (
     <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
       <nav className="flex items-center justify-between">
@@ -21,7 +23,9 @@ const Navbar = async () => {
                 href={"/startup/create"}
                 className="flex items-center gap-1"
               >
-                <span className="max-sm:hidden flex items-center gap-1">Create <BadgePlus className="size-6 hover:text-green-500"/></span>
+                <span className="max-sm:hidden flex items-center gap-1">
+                  Create <BadgePlus className="size-6 hover:text-green-500" />
+                </span>
                 <BadgePlus className="size-6 text-green-500 sm:hidden" />
               </Link>
 
@@ -33,7 +37,9 @@ const Navbar = async () => {
                 }}
               >
                 <button type="submit" className="cursor-pointer max-sm:hidden">
-                  <span className="max-sm:hidden flex items-center gap-1">LogOut <LogOut className="size-6 hover:text-red-500"/></span>
+                  <span className="max-sm:hidden flex items-center gap-1">
+                    LogOut <LogOut className="size-6 hover:text-red-500" />
+                  </span>
                 </button>
               </form>
 
@@ -66,16 +72,34 @@ const Navbar = async () => {
               </Link>
             </>
           ) : (
-            <form
-              action={async () => {
-                "use server";
-                await signIn("github");
-              }}
-            >
-              <button type="submit">
-                <span>Login</span>
-              </button>
-            </form>
+            <div className="flex items-center gap-5 justify-between">
+              <form
+                className="cursor-pointer"
+                action={async () => {
+                  "use server";
+                  await signIn("github");
+                }}
+              >
+                <button 
+                className="cursor-pointer"
+                type="submit">
+                  <span>Login With Github</span>
+                </button>
+              </form>
+              
+              <form
+                action={async () => {
+                  "use server";
+                  await signIn("google");
+                }}
+              >
+                <button
+                className="cursor-pointer"
+                type="submit">
+                  <span>Login With Google</span>
+                </button>
+              </form>
+            </div>
           )}
         </div>
       </nav>
