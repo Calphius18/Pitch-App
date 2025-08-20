@@ -1,10 +1,12 @@
 import { auth } from "@/auth";
+import StartupCardSkeleton from "@/components/StartupCard";
 import UserStartups from "@/components/UserStartups";
 import { client } from "@/sanity/lib/client";
 import { AUTHOR_BY_ID_QUERY } from "@/sanity/lib/queries";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
@@ -25,8 +27,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           <Image
-            src={user?.image}
-            alt={user?.name}
+            src={user?.image!}
+            alt={user?.name!}
             width={220}
             height={220}
             className="profile_image"
@@ -44,8 +46,15 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             {session?.id === id ? "Your" : "All"} Startups
           </p>
 
-          <ul className="card_grid_sm">
-            <Suspense fallback={<p>Loading ...</p>}>
+          <ul className="card_grid-sm">
+            <Suspense fallback={<StartupCardSkeleton post={{
+              _id: "default_id",
+              _type: "startup",
+              _createdAt: "",
+              _updatedAt: "",
+              _rev: "",
+              // add other required fields with default values if needed
+            }} />}>
               <UserStartups id={id} />
             </Suspense>
           </ul>

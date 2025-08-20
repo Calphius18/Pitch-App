@@ -36,7 +36,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <section className="section_container">
         <img
-          src={post.image}
+          src={post.image!}
           alt="thumbnail"
           className="w-full max-h-[400px] rounded-xl"
         />
@@ -48,7 +48,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               className="flex gap-2 items-center mb-3"
             >
               <Image
-                src={post.author?.image}
+                src={post.author?.image!}
                 alt="avatar"
                 width={64}
                 height={64}
